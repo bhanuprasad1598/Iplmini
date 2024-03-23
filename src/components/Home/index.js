@@ -49,7 +49,7 @@ class Home extends Component {
   }
 
   renderLoader = () => (
-    <div className="loader-container">
+    <div className="loader-container" testid="loader">
       <Loader type="Oval" color="#ffffff" height="50" />
     </div>
   )
@@ -62,7 +62,7 @@ class Home extends Component {
         <div className="logo-title-container">
           <img
             src="https://assets.ccbp.in/frontend/react-js/ipl-logo-img.png"
-            alt="ipl-logo"
+            alt="ipl logo"
             className="ipl-logo"
           />
           <h1 className="home-heading">IPL Dashboard</h1>

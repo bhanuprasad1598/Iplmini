@@ -73,3 +73,9 @@
     margin-top: 32px;
   }
 }
+.back-button {
+  margin: 16px;
+  width: 80px;
+  height: 32px;
+  cursor: pointer;
+}

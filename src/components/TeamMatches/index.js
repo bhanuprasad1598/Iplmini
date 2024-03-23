@@ -1,10 +1,11 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
-
+import {withRouter} from 'react-router-dom'
 import LatestMatch from '../LatestMatch'
 import MatchCard from '../MatchCard'
 
 import './index.css'
+// import PieChart from '../PieChart'
 
 const teamMatchesApiUrl = 'https://apis.ccbp.in/ipl/'
 
@@ -58,32 +59,20 @@ class TeamMatches extends Component {
     const {recentMatches} = recentMatchesData
 
     return (
-      <ul className="recent-matches-list">
-        {recentMatches.map(recentMatch => (
-          <MatchCard matchData={recentMatch} key={recentMatch.id} />
-        ))}
-      </ul>
+      <>
+        <ul className="recent-matches-list">
+          {recentMatches.map(recentMatch => (
+            <MatchCard matchData={recentMatch} key={recentMatch.id} />
+          ))}
+        </ul>
+      </>
     )
   }
 
-  renderTeamMatches = () => {
-    const {match} = this.props
-    const {params} = match
-    const {id} = params
-    const {recentMatchesData} = this.state
-    const {teamBannerURL, latestMatch} = recentMatchesData
-
-    return (
-      <div className="team-matches-container">
-        <img src={teamBannerURL} alt="team banner" className="team-banner" />
-        <LatestMatch latestMatchData={latestMatch} />
-        {this.renderRecentMatchesList()}
-      </div>
-    )
-  }
+  renderTeamMatches = () => {}
 
   renderLoader = () => (
-    <div className="loader-container">
+    <div className="loader-container" testid="loader">
       <Loader type="Oval" color="#ffffff" height="50" />
     </div>
   )
@@ -95,16 +84,42 @@ class TeamMatches extends Component {
     return id.toLowerCase()
   }
 
+  onClickBackButton = () => {
+    const {history} = this.props
+    console.log(this.props)
+    history.push('/')
+  }
+
   render() {
-    const {isLoading} = this.state
+    const {isLoading, recentMatchesData} = this.state
+    const {teamBannerURL, latestMatch} = recentMatchesData
     const className = `team-matches-route-container ${this.getTeamClassName()}`
 
     return (
       <div className={className}>
-        {isLoading ? this.renderLoader() : this.renderTeamMatches()}
+        {isLoading && this.renderLoader()}
+        {!isLoading && (
+          <div className="team-matches-container">
+            <button
+              type="button"
+              className="back-button"
+              onClick={this.onClickBackButton}
+            >
+              {' '}
+              Back{' '}
+            </button>
+            <img
+              src={teamBannerURL}
+              alt="team banner"
+              className="team-banner"
+            />
+            <LatestMatch latestMatchData={latestMatch} />
+            {this.renderRecentMatchesList()}
+          </div>
+        )}
       </div>
     )
   }
 }
 
-export default TeamMatches
+export default withRouter(TeamMatches)

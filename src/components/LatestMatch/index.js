@@ -1,8 +1,8 @@
 import './index.css'
 
 const LatestMatch = props => {
-  console.log('latest match')
-  console.log(props)
+  //   console.log('latest match')
+  //   console.log(props)
   const {latestMatchData} = props
   const {
     umpires,
